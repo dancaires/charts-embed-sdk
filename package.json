@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^2.3.0",
+    "parcel": "^2.8.0"
+  }
+}
