@@ -2,11 +2,11 @@ import ChartsEmbedSDK from "@mongodb-js/charts-embed-dom";
 import "@alenaksu/json-viewer";
 
 const sdk = new ChartsEmbedSDK({
-  baseUrl: "https://charts.mongodb.com/charts-embedding-examples-wgffp", // Optional: ~REPLACE~ with the Base URL from your Embed Chart dialog
+  baseUrl: "https://charts.mongodb.com/charts-vave-management-gcocu", // Optional: ~REPLACE~ with the Base URL from your Embed Chart dialog
 });
 
 const chart = sdk.createChart({
-  chartId: "735cfa75-15b8-483a-bc2e-7c6659511c7c", // Optional: ~REPLACE~ with the Chart ID from your Embed Chart dialog
+  chartId: "636eca04-f4e1-4244-8493-2b183b62100f", // Optional: ~REPLACE~ with the Chart ID from your Embed Chart dialog
   height: "700px",
 });
 
