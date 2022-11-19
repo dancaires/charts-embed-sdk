@@ -1,0 +1,36 @@
+const request = require('request');
+
+const options = {
+  method: 'GET',
+  url: 'https://www.webmotors.com.br/api/search/car',
+  qs: {
+    url: 'https://www.webmotors.com.br/carros^%^2Fmg-belo-horizonte^%^3Festadocidade^%^3DMinas^%^2520Gerais^%^2520-^%^2520Belo^%^2520Horizonte^%^26tipoveiculo^%^3Dcarros^%^26localizacao^%^3D-19.9622297^%^2C-43.9564985x0km',
+    actualPage: '1',
+    displayPerPage: '94',
+    order: '1',
+    showMenu: 'true',
+    showCount: 'true',
+    showBreadCrumb: 'true',
+    testAB: 'false',
+    returnUrl: 'false'
+  },
+  headers: {
+    authority: 'www.webmotors.com.br',
+    accept: 'application/json, text/plain, */*',
+    'accept-language': 'pt-PT,pt;q=0.9',
+    cookie: 'at_check=true; AMCVS_3ADD33055666F1A47F000101^%^40AdobeOrg=1; WebMotorsVisitor=1; AMCV_3ADD33055666F1A47F000101^%^40AdobeOrg=1176715910^%^7CMCIDTS^%^7C19316^%^7CMCMID^%^7C27272492416794578732486118309270313660^%^7CMCAAMLH-1669484074^%^7C4^%^7CMCAAMB-1669484074^%^7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y^%^7CMCOPTOUT-1668886474s^%^7CNONE^%^7CMCSYNCSOP^%^7C411-19323^%^7CvVersion^%^7C5.4.0; __gads=ID=d4024aa1ddd4bd04:T=1668879275:S=ALNI_MbzS5lTzJ8ixQdvkU4qtZiDmfCkmw; __gpi=UID=000008ad4eff7c9d:T=1668879275:RT=1668879275:S=ALNI_MbvybvaUmzeMTTEKpWLO1fpl5jDOg; s_cc=true; pxcts=7b8dc184-6830-11ed-adb6-6a79484c7743; _pxvid=7b8daf50-6830-11ed-adb6-6a79484c7743; blueID=1ce24d10-8500-4812-8e5c-dfcf42f25703; _gcl_au=1.1.1596549560.1668879302; _fbp=fb.2.1668879302249.875034821; _hjFirstSeen=1; _hjIncludedInSessionSample=0; _hjSession_278928=eyJpZCI6IjdlMjY4MTQyLTRkY2YtNGYxNi05ZTQ4LTE5N2ZjYmU4MGI3NCIsImNyZWF0ZWQiOjE2Njg4NzkzMDIzMTAsImluU2FtcGxlIjpmYWxzZX0=; _hjAbsoluteSessionInProgress=0; gpv_v39=^%^2Fwebmotors^%^2Fcomprar^%^2Fresultado; s_sq=^%^5B^%^5BB^%^5D^%^5D; WMLastFilterSearch=^%^7B^%^22car^%^22^%^3A^%^22carros^%^2Fmg-belo-horizonte^%^3Festadocidade^%^3DMinas^%^2520Gerais^%^2520-^%^2520Belo^%^2520Horizonte^%^26tipoveiculo^%^3Dcarros^%^26localizacao^%^3D-19.9622297^%^2C-43.9564985x0km^%^22^%^2C^%^22bike^%^22^%^3A^%^22motos^%^2Festoque^%^22^%^2C^%^22estadocidade^%^22^%^3A^%^22Minas^%^20Gerais^%^20-^%^20Belo^%^20Horizonte^%^22^%^2C^%^22lastType^%^22^%^3A^%^22car^%^22^%^2C^%^22cookie^%^22^%^3A^%^22v3^%^22^%^2C^%^22ano^%^22^%^3A^%^7B^%^7D^%^2C^%^22preco^%^22^%^3A^%^7B^%^7D^%^2C^%^22marca^%^22^%^3A^%^22^%^22^%^2C^%^22modelo^%^22^%^3A^%^22^%^22^%^7D; _pxff_cc=U2FtZVNpdGU9TGF4Ow==; _pxff_rf=1; _pxff_fp=1; cto_bundle=CF6DRV8zSml6VHBNcnJtMHhhWTFRSUR6eCUyQnFwc29kQnp0dmFNbktjZHJ1MnVMRjk0M3c5NEpyb0dubUVCYVU4M1JwbFM1NXJlUklNUkJVekJxNTBLQ3IlMkJiWkFiYTVBdTdudzhDRXBNQkZ3JTJCZ2NNbmpMREpnRmtwZiUyQldZMGFhZnR3ayUyRjF1dGVEaDNZczFXNUJhZ3E1MzlyYWFtSjRBVVB5d2tvY2RPcm1JYm1qVCUyQmMlM0Q; _hjSessionUser_278928=eyJpZCI6IjJkMWRhMGJlLTBiNTAtNTA1Yi04MTVlLWY5OGY2ZTNiNmUwOSIsImNyZWF0ZWQiOjE2Njg4NzkzMDIyOTAsImV4aXN0aW5nIjp0cnVlfQ==; _px3=a49e82d4c33b76e6250d4d8480942980c90b71af5739af394d7f691d6a92f50b:FDywIUq2hc3nlOy7EgGqwsJmfJ8qUtE/Y9Wo3QXga15SYluTEW9tcUZctxHsDfV233N91X/hVUl1CGOqZXQBbw==:1000:APaTdhzMIK2KZCBECXBpUwv30zeEFyGCvT02jArgcUTye23t1vhpww8KUYjrvOgRIPUrak14mnW5EDAJ/sLh2EzKF7B1yihwJ3qcKRRd8S5aMbhpGcwqS5JD64eMJorPy1ojxCPUxcVgNXZZ2W4QPjcNp19xrGzN01F/tXiIYjf4LDVnTK/vircDYKxwL/lcjOiM2aLClAiDDuGZHroMnQ==; WebMotorsSearchDataLayer=^%^7B^%^22search^%^22^%^3A^%^7B^%^22location^%^22^%^3A^%^7B^%^22city^%^22^%^3A^%^22Belo^%^20Horizonte^%^20MG^%^22^%^2C^%^22state^%^22^%^3A^%^22MG^%^22^%^7D^%^2C^%^22ordination^%^22^%^3A^%^7B^%^22name^%^22^%^3A^%^22Mais^%^20relevantes^%^22^%^2C^%^22id^%^22^%^3A1^%^7D^%^2C^%^22pageNumber^%^22^%^3A3^%^2C^%^22totalResults^%^22^%^3A10205^%^2C^%^22vehicle^%^22^%^3A^%^7B^%^22type^%^22^%^3A^%^7B^%^22id^%^22^%^3A1^%^2C^%^22name^%^22^%^3A^%^22carro^%^22^%^7D^%^7D^%^2C^%^22cardExhibition^%^22^%^3A^%^7B^%^22id^%^22^%^3A^%^221^%^22^%^2C^%^22name^%^22^%^3A^%^22Cards^%^20Grid^%^22^%^7D^%^2C^%^22eventType^%^22^%^3A^%^22paginacaoRealizada^%^22^%^7D^%^7D; mbox=session^#4430d26a8c204697902c36d91929e371^#1668882664^|PC^#4430d26a8c204697902c36d91929e371.34_0^#1732125604',
+    'sec-ch-ua': '^\^Google',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '^\^Windows^^',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+  }
+};
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+
+  console.log(body);
+});
