@@ -10,24 +10,6 @@ const chart = sdk.createChart({
   height: "700px",
 });
 
-async function renderChart() {
-  await chart.render(document.getElementById("chart"));
 
-  document
-    .getElementById("themeSwitch")
-    .addEventListener("change", async function () {
-      if (this.checked) {
-        await chart.setTheme("dark");
-        document.body.classList.toggle("dark-mode", true);
-      } else {
-        await chart.setTheme("light");
-        document.body.classList.toggle("dark-mode", false);
-      }
-
-      var currentTheme = await chart.getTheme();
-      document.getElementById("currentTheme").innerText = currentTheme;
-    });
-
-}
 
 renderChart().catch((e) => window.alert(e.message));
