@@ -10,6 +10,9 @@ const chart = sdk.createChart({
   height: "700px",
 });
 
+async function renderChart() {
+  await chart.render(document.getElementById("chart"));
 
+}
 
 renderChart().catch((e) => window.alert(e.message));
